@@ -541,9 +541,8 @@ class AppWindow(QWidget):
                 save_file_path = file_dialog.selectedFiles()[0]
 
             if save_file_path: # If user didn't cancel the dialog
-                # Copy the file to the user-selected location
-                shutil.copy(source_file_path, save_file_path)
-                logging.info(f"Template also saved to: {save_file_path} (User-chosen path) and {source_file_path} (Automatic path)")
+                # The worker will handle the file copy
+                pass
 
             self.export_template_requested.emit(
                 template_info_data,
