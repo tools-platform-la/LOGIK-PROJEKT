@@ -105,29 +105,35 @@ def create_flame_launcher_script(
 
     app_starter = ""
     software_choice_lower = flame_software_choice.lower()
+
+    # Initialize replacements with default values
+    replacements = {
+        "%%FLAME_STARTUP_SCRIPT_PY%%": (
+            "scripts/startup/flame_startup_script.py"
+        ),
+        "%%LAUNCHER_SCRIPT_PROJEKT%%": the_projekt_flame_name,
+        "%%SCRIPT_CREATION_DATE%%": datetime.datetime.now().strftime(
+            "%Y-%m-%d %H:%M:%S"
+        ),
+        "%%LOGIK_PROJEKT_PATH%%": logik_projekt_path,
+        "%%LOGIK_PROJEKT_NAME%%": logik_projekt_name,
+        "%%FLAME_PROJEKT_NAME%%": the_projekt_flame_name,
+        "%%CURRENT_WORKSTATION%%": current_workstation,
+        "%%FLAME_FIRST_RUN_NAME%%": "current_session-flame_launcher.log",
+        "%%FLAME_SOFTWARE_CHOICE%%": flame_software_choice,
+        "%%APPLICATION_STARTER%%": app_starter,  # Will be updated below
+        "%%FLAME_PROJEKT_SETUPS_DIR%%": flame_projekt_setups_dir,
+    }
+
     if 'flame' in software_choice_lower:
         app_starter = 'startFlame'
     elif 'flare' in software_choice_lower:
         app_starter = 'startFlare'
     elif 'assist' in software_choice_lower:
         app_starter = 'startFlameAssist'
-        replacements = {
-            "%%FLAME_STARTUP_SCRIPT_PY%%": (
-                "scripts/startup/flame_startup_script.py"
-            ),
-            "%%LAUNCHER_SCRIPT_PROJEKT%%": the_projekt_flame_name,
-            "%%SCRIPT_CREATION_DATE%%": datetime.datetime.now().strftime(
-                "%Y-%m-%d %H:%M:%S"
-            ),
-            "%%LOGIK_PROJEKT_PATH%%": logik_projekt_path,
-            "%%LOGIK_PROJEKT_NAME%%": logik_projekt_name,
-            "%%FLAME_PROJEKT_NAME%%": the_projekt_flame_name,
-            "%%CURRENT_WORKSTATION%%": current_workstation,
-            "%%FLAME_FIRST_RUN_NAME%%": "current_session-flame_launcher.log",
-            "%%FLAME_SOFTWARE_CHOICE%%": flame_software_choice,
-            "%%APPLICATION_STARTER%%": app_starter,
-            "%%FLAME_PROJEKT_SETUPS_DIR%%": flame_projekt_setups_dir,
-        }
+
+    # Update the app_starter in replacements after it's determined
+    replacements["%%APPLICATION_STARTER%%"] = app_starter
 
     for placeholder, value in replacements.items():
         template_content = (
