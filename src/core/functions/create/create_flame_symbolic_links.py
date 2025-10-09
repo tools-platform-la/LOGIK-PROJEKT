@@ -154,11 +154,8 @@ def create_flame_symbolic_links(
                             destination_path_iterations
                         )
                         logging.info(
-                            "Created symlink: "
-                            (
-                                f"{destination_path_iterations} -> "
-                                f"{source_path_iterations}"
-                            )
+                            f"""Created symlink: {destination_path_iterations} -> "
+                            f"{source_path_iterations}"""
                         )
                     else:
                         if (
@@ -200,14 +197,9 @@ def create_flame_symbolic_links(
                 )
             except Exception as e:
                 logging.error(
-                    (
-                        "An unexpected error occurred while "
-                        "creating symlink for "
-                        (
-                            f"{source_path_iterations} to "
-                            f"{destination_path_iterations}: {e}"
-                        )
-                    )
+                    f"""An unexpected error occurred while creating symlink for "
+                    f"{source_path_iterations} to "
+                    f"{destination_path_iterations}: {e}"""
                 )
 
             # Create flame_projekt_setups_dir ->

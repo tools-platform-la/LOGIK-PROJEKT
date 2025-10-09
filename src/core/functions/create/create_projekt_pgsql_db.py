@@ -44,8 +44,8 @@ def create_projekt_pgsql_db(
         where the DB data could be stored.
     """
     logging.info(
-        f"Attempting to create PostgreSQL database 
-        for project '{logik_projekt_name}'...")
+        f"""Attempting to create PostgreSQL database
+        for project '{logik_projekt_name}'...""")
 
     # This is a placeholder for the database creation logic.
     # PostgreSQL typically runs as a system-wide service, and creating 
