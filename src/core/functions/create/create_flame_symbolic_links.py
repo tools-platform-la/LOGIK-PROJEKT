@@ -133,199 +133,200 @@ def create_flame_symbolic_links(
                     f"{source_path} to {destination_path}: {e}"
                 )
             )
-            # Create logik_projekt_path/flame/iterations ->
-            # flame_projekt_setups_dir/batch/flame/iterations
-            source_path_iterations = os.path.join(
-                logik_projekt_path,
-                "flame",
-                "iterations"
-            )
-            destination_path_iterations = os.path.join(
-                flame_projekt_setups_dir,
-                "batch",
-                "flame",
-                "iterations"
-            )
-            try:
-                if os.path.exists(source_path_iterations):
-                    if not os.path.lexists(destination_path_iterations):
-                        os.symlink(
-                            source_path_iterations,
-                            destination_path_iterations
+
+    # Create logik_projekt_path/flame/iterations ->
+    # flame_projekt_setups_dir/batch/flame/iterations
+    source_path_iterations = os.path.join(
+        logik_projekt_path,
+        "flame",
+        "iterations"
+    )
+    destination_path_iterations = os.path.join(
+        flame_projekt_setups_dir,
+        "batch",
+        "flame",
+        "iterations"
+    )
+    try:
+        if os.path.exists(source_path_iterations):
+            if not os.path.lexists(destination_path_iterations):
+                os.symlink(
+                    source_path_iterations,
+                    destination_path_iterations
+                )
+                logging.info(
+                    f"""Created symlink: {destination_path_iterations} -> "
+                    f"{source_path_iterations}"""
+                )
+            else:
+                if (
+                    os.path.islink(destination_path_iterations)
+                    and os.readlink(destination_path_iterations)
+                    == source_path_iterations
+                ):
+                    logging.info(
+                        (
+                            "Symlink already exists and is correct: "
+                            f"{destination_path_iterations} -> "
+                            f"{source_path_iterations}"
                         )
-                        logging.info(
-                            f"""Created symlink: {destination_path_iterations} -> "
-                            f"{source_path_iterations}"""
-                        )
-                    else:
-                        if (
-                            os.path.islink(destination_path_iterations)
-                            and os.readlink(destination_path_iterations)
-                            == source_path_iterations
-                        ):
-                            logging.info(
-                                (
-                                    "Symlink already exists and is correct: "
-                                    f"{destination_path_iterations} -> "
-                                    f"{source_path_iterations}"
-                                )
-                            )
-                        else:
-                            logging.warning(
-                                (
-                                    "Destination path already exists and "
-                                    "is not a symlink to the correct source, "
-                                    "or is a broken symlink: "
-                                    f"{destination_path_iterations}. "
-                                    "Skipping."
-                                )
-                            )
+                    )
                 else:
                     logging.warning(
                         (
-                            f"Source path for symlink does not exist: "
-                            f"{source_path_iterations}. Skipping."
+                            "Destination path already exists and "
+                            "is not a symlink to the correct source, "
+                            "or is a broken symlink: "
+                            f"{destination_path_iterations}. "
+                            "Skipping."
                         )
                     )
-            except OSError as e:
-                logging.error(
-                    (
-                        "Error creating symbolic link for "
-                        f"{source_path_iterations} to "
-                        f"{destination_path_iterations}: {e}"
+        else:
+            logging.warning(
+                (
+                    f"Source path for symlink does not exist: "
+                    f"{source_path_iterations}. Skipping."
+                )
+            )
+    except OSError as e:
+        logging.error(
+            (
+                "Error creating symbolic link for "
+                f"{source_path_iterations} to "
+                f"{destination_path_iterations}: {e}"
+            )
+        )
+    except Exception as e:
+        logging.error(
+            f"""An unexpected error occurred while creating symlink for "
+            f"{source_path_iterations} to "
+            f"{destination_path_iterations}: {e}"""
+        )
+
+    # Create flame_projekt_setups_dir ->
+    # logik_projekt_path/flame/{current_workstation}/setups
+    source_path_setups = flame_projekt_setups_dir
+    destination_path_setups = os.path.join(
+        logik_projekt_path,
+        "flame",
+        "setups",
+        current_workstation,
+        "setups",
+    )
+
+    # Ensure the parent directory of the destination exists
+    destination_parent_dir = os.path.dirname(destination_path_setups)
+    logging.info(
+        f"  Destination parent directory: {destination_parent_dir}"
+    )
+    logging.info(
+        f"  Destination parent directory exists: "
+        f"{os.path.exists(destination_parent_dir)}"
+    )
+    os.makedirs(destination_parent_dir, exist_ok=True)
+    logging.info("  Ensured destination parent directory exists.")
+
+    logging.info("Attempting to create symlink for setups directory:")
+    logging.info(f"  Source: {source_path_setups}")
+    logging.info(f"  Destination: {destination_path_setups}")
+    logging.info(
+        f"  Source exists: {os.path.exists(source_path_setups)}"
+    )
+    logging.info(
+        f"  Destination exists (lexists): "
+        f"{os.path.lexists(destination_path_setups)}"
+    )
+    if os.path.lexists(destination_path_setups):
+        logging.info(
+            f"  Destination is symlink: "
+            f"{os.path.islink(destination_path_setups)}"
+        )
+        if os.path.islink(destination_path_setups):
+            logging.info(
+                f"  Destination symlink points to: "
+                f"{os.readlink(destination_path_setups)}"
+            )
+
+    max_retries = 5
+    retry_delay = 0.1  # seconds
+    for attempt in range(max_retries):
+        try:
+            if os.path.exists(source_path_setups):
+                if not os.path.lexists(destination_path_setups):
+                    os.symlink(
+                        source_path_setups,
+                        destination_path_setups,
                     )
-                )
-            except Exception as e:
-                logging.error(
-                    f"""An unexpected error occurred while creating symlink for "
-                    f"{source_path_iterations} to "
-                    f"{destination_path_iterations}: {e}"""
-                )
-
-            # Create flame_projekt_setups_dir ->
-            # logik_projekt_path/flame/{current_workstation}/setups
-            source_path_setups = flame_projekt_setups_dir
-            destination_path_setups = os.path.join(
-                logik_projekt_path,
-                "flame",
-                "setups",
-                current_workstation,
-                "setups",
-            )
-
-            # Ensure the parent directory of the destination exists
-            destination_parent_dir = os.path.dirname(destination_path_setups)
-            logging.info(
-                f"  Destination parent directory: {destination_parent_dir}"
-            )
-            logging.info(
-                f"  Destination parent directory exists: "
-                f"{os.path.exists(destination_parent_dir)}"
-            )
-            os.makedirs(destination_parent_dir, exist_ok=True)
-            logging.info("  Ensured destination parent directory exists.")
-
-            logging.info("Attempting to create symlink for setups directory:")
-            logging.info(f"  Source: {source_path_setups}")
-            logging.info(f"  Destination: {destination_path_setups}")
-            logging.info(
-                f"  Source exists: {os.path.exists(source_path_setups)}"
-            )
-            logging.info(
-                f"  Destination exists (lexists): "
-                f"{os.path.lexists(destination_path_setups)}"
-            )
-            if os.path.lexists(destination_path_setups):
-                logging.info(
-                    f"  Destination is symlink: "
-                    f"{os.path.islink(destination_path_setups)}"
-                )
-                if os.path.islink(destination_path_setups):
                     logging.info(
-                        f"  Destination symlink points to: "
-                        f"{os.readlink(destination_path_setups)}"
+                        (
+                            "Created symlink: "
+                            f"{destination_path_setups} -> "
+                            f"{source_path_setups}"
+                        )
                     )
-
-            max_retries = 5
-            retry_delay = 0.1  # seconds
-            for attempt in range(max_retries):
-                try:
-                    if os.path.exists(source_path_setups):
-                        if not os.path.lexists(destination_path_setups):
-                            os.symlink(
-                                source_path_setups,
-                                destination_path_setups,
+                    break  # Success, exit loop
+                else:
+                    if (
+                        os.path.islink(destination_path_setups)
+                        and os.readlink(destination_path_setups)
+                        == source_path_setups
+                    ):
+                        logging.info(
+                            (
+                                "Symlink already exists "
+                                "and is correct: "
+                                f"{destination_path_setups} -> "
+                                f"{source_path_setups}"
                             )
-                            logging.info(
-                                (
-                                    "Created symlink: "
-                                    f"{destination_path_setups} -> "
-                                    f"{source_path_setups}"
-                                )
-                            )
-                            break  # Success, exit loop
-                        else:
-                            if (
-                                os.path.islink(destination_path_setups)
-                                and os.readlink(destination_path_setups)
-                                == source_path_setups
-                            ):
-                                logging.info(
-                                    (
-                                        "Symlink already exists "
-                                        "and is correct: "
-                                        f"{destination_path_setups} -> "
-                                        f"{source_path_setups}"
-                                    )
-                                )
-                                break  # Success, exit loop
-                            else:
-                                logging.warning(
-                                    (
-                                        "Destination path already exists "
-                                        "and is not a symlink "
-                                        "to the correct source, "
-                                        "or is a broken symlink: "
-                                        f"{destination_path_setups}. Skipping."
-                                    )
-                                )
-                                break  # No point in retrying if it exists
+                        )
+                        break  # Success, exit loop
                     else:
                         logging.warning(
                             (
-                                "Source path for symlink does not exist: "
-                                f"{source_path_setups}. Skipping."
+                                "Destination path already exists "
+                                "and is not a symlink "
+                                "to the correct source, "
+                                "or is a broken symlink: "
+                                f"{destination_path_setups}. Skipping."
                             )
                         )
-                        break  # No point in retrying if source doesn't exist
-                except OSError as e:
-                    logging.error(
-                        (
-                            "Error creating symbolic link for "
-                            f"{source_path_setups} to "
-                            f"{destination_path_setups} "
-                            f"(Attempt {attempt + 1}/{max_retries}): {e}"
-                        )
+                        break  # No point in retrying if it exists
+            else:
+                logging.warning(
+                    (
+                        "Source path for symlink does not exist: "
+                        f"{source_path_setups}. Skipping."
                     )
-                    if attempt < max_retries - 1:
-                        time.sleep(retry_delay)
-                    else:
-                        logging.error(
-                            (
-                                "Failed to create symlink after "
-                                f"{max_retries} attempts."
-                            )
-                        )
-                except Exception as e:
-                    logging.error(
-                        (
-                            "An unexpected error occurred "
-                            "while creating symlink for "
-                            f"{source_path_setups} to "
-                            f"{destination_path_setups}: {e}"
-                        )
+                )
+                break  # No point in retrying if source doesn't exist
+        except OSError as e:
+            logging.error(
+                (
+                    "Error creating symbolic link for "
+                    f"{source_path_setups} to "
+                    f"{destination_path_setups} "
+                    f"(Attempt {attempt + 1}/{max_retries}): {e}"
+                )
+            )
+            if attempt < max_retries - 1:
+                time.sleep(retry_delay)
+            else:
+                logging.error(
+                    (
+                        "Failed to create symlink after "
+                        f"{max_retries} attempts."
                     )
-                    break  # Unexpected error, no point in retrying
+                )
+        except Exception as e:
+            logging.error(
+                (
+                    "An unexpected error occurred "
+                    "while creating symlink for "
+                    f"{source_path_setups} to "
+                    f"{destination_path_setups}: {e}"
+                )
+            )
+            break  # Unexpected error, no point in retrying
 
 
 # -------------------------------------------------------------------------- #

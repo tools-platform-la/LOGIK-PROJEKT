@@ -106,11 +106,13 @@ class GetApplicationPaths:
         "start_frame/" +
         "start_frame_list_values.json"
     )
-    SYSCONFIG_CFG = (
-        FLAME_VALUE_LISTS_DIR +
-        "sysconfig/" +
-        "sysconfig.cfg"
-    )
+    # The original path below is for testing purposes only.
+    # SYSCONFIG_CFG = (
+    #     FLAME_VALUE_LISTS_DIR +
+    #     "sysconfig/" +
+    #     "sysconfig.cfg"
+    # )
+    SYSCONFIG_CFG = "/opt/Autodesk/cfg/.current/sysconfig.cfg"
     WIRETAP_XML_TEMPLATE = (
         FLAME_TEMPLATES_DIR +
         "wiretap-templates/" +
