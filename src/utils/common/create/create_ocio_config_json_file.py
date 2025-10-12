@@ -117,7 +117,10 @@ try:
             '..',
             'cfg',
             'site-cfg',
-            'ocio',
+            'flame-cfg',
+            'flame-scripts',
+            'opencolorio',
+            'flame_colortoolkit_files',
             (f'ocio_v{config.getMajorVersion()}_'
              f'{config.getMinorVersion()}_color_space_names.md')
         )
@@ -195,7 +198,10 @@ try:
             '..',
             'cfg',
             'site-cfg',
-            'ocio',
+            'flame-cfg',
+            'flame-scripts',
+            'opencolorio',
+            'flame_colortoolkit_files',
             (f'ocio_v{config.getMajorVersion()}_'
              f'{config.getMinorVersion()}_config.json')
         )

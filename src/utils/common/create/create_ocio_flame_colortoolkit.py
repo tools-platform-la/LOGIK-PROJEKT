@@ -41,10 +41,9 @@ json_input_dir = os.path.abspath(
         'cfg',
         'site-cfg',
         'flame-cfg',
-        'flame-presets',
-        'colour_mgmt',
-        'transforms',
-        'flame-colortoolkit',
+        'flame-scripts',
+        'opencolorio',
+        'flame_colortoolkit_files',
         'json'
     )
 )
