@@ -14,11 +14,11 @@
 # License:      GNU General Public License v3.0 (GPL-3.0).
 #               https://www.gnu.org/licenses/gpl-3.0.en.html
 
-# Version:      2026.1.0
+# Version:      2026.2.0
 # Status:       Development
 # Type:         Utility
 # Created:      2025-08-07
-# Modified:     2025-08-07
+# Modified:     2025-10-30
 
 # Changelog:    Changelog at bottom of script.
 # -------------------------------------------------------------------------- #
@@ -103,16 +103,6 @@ if __name__ == "__main__":
     main()
 
 # -------------------------------------------------------------------------- #
-# Changelog:
-# -------------------------------------------------------------------------- #
-# Version:      2026.1.0
-# Modification: 2025-08-07
-# Changelist:
-#   - Initial creation of the Python wrapper script.
-#   - Reads Autodesk Python executable path from .pref file.
-#   - Executes target script using the specified Python interpreter.
-#   - Includes error handling for file existence and executability.
-# -------------------------------------------------------------------------- #
 
 # DISCLAIMER:   This file is part of LOGIK-PROJEKT.
 
@@ -141,4 +131,14 @@ if __name__ == "__main__":
 
 #               Contact: phil_man@mac.com
 
+# -------------------------------------------------------------------------- #
+# Changelog:
+# -------------------------------------------------------------------------- #
+
+# Version:      2026.2.0
+# Modification: 2025-10-30
+# Changelist:
+#   - Updated version to 2026.2.0.
+#   - Verified compatibility with Autodesk Flame 2026.2.0.
+#   - No code changes required.
 # -------------------------------------------------------------------------- #

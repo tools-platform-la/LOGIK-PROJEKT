@@ -10,13 +10,19 @@
 # License:      GNU General Public License v3.0 (GPL-3.0).
 #               https://www.gnu.org/licenses/gpl-3.0.en.html
 
-# Version:      2026.1.0
+# Version:      2026.2.0
 # Status:       Development
 # Type:         Application
 # Created:      2025-07-01
-# Modified:     2025-10-07
+# Modified:     2025-10-30
 
-# Changelog:    Changelog at bottom of script.
+# Changelog:
+# -------------------------------------------------------------------------- #
+# Modified:     2025-10-30
+# Version:      2026.2.0
+#               Updated version to 2026.2.0.
+#               Verified compatibility with Autodesk Flame 2026.2.0.
+#               No code changes required.
 # -------------------------------------------------------------------------- #
 
 
@@ -989,5 +995,12 @@ if __name__ == '__main__':
 # -------------------------------------------------------------------------- #
 # C2 A9 32 30 32 35 53 54 52 45 4E 47 54 48 2D 49 4E 2D 4E 55 4D 42 45 52 53 #
 # -------------------------------------------------------------------------- #
+
 # Changelog:
+# -------------------------------------------------------------------------- #
+# Modified:     2025-10-30
+# Version:      2026.2.0
+#               Updated version to 2026.2.0.
+#               Verified compatibility with Autodesk Flame 2026.2.0.
+#               No code changes required.
 # -------------------------------------------------------------------------- #
