@@ -224,7 +224,6 @@ def create_flame_archive_script(projekt_summary_data: dict):
 # -------------------------------------------------------------------------- #
 # Changelog:
 # -------------------------------------------------------------------------- #
-
 # Version:      2026.2.0
 # Modified:     2025-10-30
 # Changelist:   Updated version to 2026.2.0.

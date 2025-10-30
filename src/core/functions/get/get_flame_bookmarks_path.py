@@ -136,7 +136,6 @@ def get_flame_bookmarks_path(logik_projekt_config_name: str) -> str:
 # -------------------------------------------------------------------------- #
 # Changelog:
 # -------------------------------------------------------------------------- #
-
 # Version:      2026.2.0
 # Modified:     2025-10-30
 # Changelist:   Updated version to 2026.2.0.

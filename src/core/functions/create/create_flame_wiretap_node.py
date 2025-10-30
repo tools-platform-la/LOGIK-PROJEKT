@@ -102,7 +102,6 @@ def create_flame_wiretap_node(flame_projekt_name, projekt_xml_path):
 # -------------------------------------------------------------------------- #
 # Changelog:
 # -------------------------------------------------------------------------- #
-
 # Version:      2026.2.0
 # Modified:     2025-10-30
 # Changelist:   Updated version to 2026.2.0.
