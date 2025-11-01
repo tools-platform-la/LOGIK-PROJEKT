@@ -115,17 +115,68 @@ class SSHKeyGenerator:
                 pass
 
     def validate_email(self, email):
-        """Validate email format with comprehensive regex."""
-        email_regex = r'^[a-zA-Z0-9]([-._a-zA-Z0-9]*[a-zA-Z0-9])*@[a-zA-Z0-9]([-._a-zA-Z0-9]*[a-zA-Z0-9])*\.[a-zA-Z]{2,}$'
+        """
+        Validate email format using a non-vulnerable approach.
+        
+        This implementation uses a simpler regex without overlapping quantifiers
+        to avoid ReDoS (Regular Expression Denial of Service) attacks.
+        It also includes length validation to prevent excessively long inputs.
+        """
+        # Reject emails that are too long (reasonable max is ~254 chars per RFC 5321)
+        if len(email) > 254:
+            messagebox.showerror(
+                "Invalid Email",
+                "Email address is too long. Maximum 254 characters allowed."
+            )
+            return False
+        
+        # Use a simpler, non-vulnerable regex pattern
+        # This pattern avoids nested quantifiers and overlapping alternatives
+        email_regex = r'^[a-zA-Z0-9]([a-zA-Z0-9._-]{0,251}[a-zA-Z0-9])?@[a-zA-Z0-9]([a-zA-Z0-9.-]{0,251}[a-zA-Z0-9])?(\.[a-zA-Z]{2,})?$'
+        
         if not re.match(email_regex, email):
             messagebox.showerror(
                 "Invalid Email",
                 "Invalid email format. Please ensure:\n"
-                "- No special characters except . - _\n"
-                "- Valid domain format\n"
-                "- At least 2 character domain extension"
+                "- Starts and ends with alphanumeric characters\n"
+                "- Contains valid domain format\n"
+                "- Uses only . - _ special characters"
             )
             return False
+        
+        # Additional validation: check for at least one @ and valid domain
+        if email.count('@') != 1:
+            messagebox.showerror(
+                "Invalid Email",
+                "Email must contain exactly one '@' symbol."
+            )
+            return False
+        
+        local_part, domain = email.rsplit('@', 1)
+        
+        # Validate local part (before @)
+        if not local_part or len(local_part) > 64:
+            messagebox.showerror(
+                "Invalid Email",
+                "Local part (before @) must be 1-64 characters."
+            )
+            return False
+        
+        # Validate domain part (after @)
+        if not domain or len(domain) < 3:
+            messagebox.showerror(
+                "Invalid Email",
+                "Domain must be at least 3 characters long."
+            )
+            return False
+        
+        if not re.match(r'^[a-zA-Z0-9]([a-zA-Z0-9.-]*[a-zA-Z0-9])?(\.[a-zA-Z]{2,})+$', domain):
+            messagebox.showerror(
+                "Invalid Email",
+                "Invalid domain format."
+            )
+            return False
+        
         return True
 
     def validate_password_strength(self, password):
@@ -764,4 +815,9 @@ if __name__ == "__main__":
 # version:               1.0.0
 # modified:              2025-05-20 - 10:30:00
 # comments:              Initial Python conversion from bash script
+# -------------------------------------------------------------------------- #
+# version:               1.0.1
+# modified:              2025-10-31 - 21:00:00
+# comments:              Fixed GitHub Error: Inefficient regular expression
+#                        Fixed Weknesses: CWE-1333, CWE-400, CWE-730
 # -------------------------------------------------------------------------- #
